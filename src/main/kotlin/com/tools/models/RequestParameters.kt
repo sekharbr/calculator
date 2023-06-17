@@ -25,7 +25,7 @@ data class RequestParameters(
             "ADD" -> this.firstNumber.plus(this.secondNumber)
             "SUBTRACT" -> this.firstNumber.minus(this.secondNumber)
             "MULTIPLY" -> this.firstNumber.multiply(this.secondNumber)
-            "DIVIDE" -> if (secondNumber.compareTo(BigDecimal.ZERO) == 0) this.firstNumber.divide(this.secondNumber) else return Response(
+            "DIVIDE" -> if (secondNumber.compareTo(BigDecimal.ZERO) != 0) this.firstNumber.divide(this.secondNumber) else return Response(
                 result = null,
                 error = "Operation failed: Denominator can't be zero"
             )
