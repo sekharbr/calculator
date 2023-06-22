@@ -1,0 +1,87 @@
+rules:
+  semantic-versioning:
+    description: "Ensuring that semantic versioning is used in API."
+    message: "You need to provide a semantic version."
+    severity: "error"
+    given: "$.info.version"
+    then: 
+      function: pattern
+      functionOptions: 
+        match: "^[0-9]+.[0-9]+.[0-9]+(-[a-z0-9+.-]+)?"
+  
+  major-api-version-in-url:
+    description: "Ensuring that major api versions in URI" 
+    message: "API version numbers SHOULD contain major version."
+    severity: "warn"
+    given: "$.servers..url"
+    then: 
+      function: pattern
+      functionOptions: 
+        match: "/[\\.|\\/|](v|version)?[0-9]+/i"
+
+  no-minor-patch-version:
+    description: "Ensuring that URI version numbers SHOULD contain major only no minor or patch."
+    message: "API version numbers SHOULD NOT contain minor or patch version."
+    severity: "warn"
+    given: "$.servers..url"
+    then: 
+      function: pattern
+      functionOptions: 
+        notMatch: "/[\\.|\\/|](v|version)?[0-9]+\\.[0-9]+/i"
+
+  non-empty-discription:  
+    description: "Ensures that OpenAPIs have non empty discription"
+    message: "Description must not be empty"
+    severity: "warn"
+    given: "$..description"
+    then: 
+      function: truthy
+
+  object-discription-is-present:
+    description: "Ensures that OpenAPIs have a information object discription."
+    message: "The info object should have a discription."
+    severity: "error"
+    recommended: true
+    given:
+      - "$.info"
+      - "$.paths.*[getpostpatchputdelete]"
+      - "$.components.schemas.*"
+    then: 
+      field: "description"
+      function: truthy
+
+  kebab-case-in-path:
+    description: "Ensures that OpenAPIs have kebab-case in uri path"
+    message: "URI path should be kebab-case"
+    severity: "warn"
+    given: "$.paths[*]~"
+    then: 
+      function: pattern
+      functionOptions: 
+        match: "^(\/|[a-z0-9-.]+|[a-zA-Z0-9_]+)+$"
+
+  lower-camel-case-schema-properties:
+    description: "Ensuring that schema property names are lower camel case."
+    message: "All schema property names should be camel case."
+    severity: "error"
+    given: "$..properties.*"
+    then: 
+      field: "@key"
+      function: casing
+      functionOptions: 
+        type: "camel"
+
+  upper-camel-case-schema-object-name:
+    description: "Ensuring that schema names are upper camel case."
+    message: "All schema names should be camel case."
+    severity: "error"
+    given: "$..schema"
+    then: 
+      field: "type"
+      function: casing
+      functionOptions: 
+        type: "pascal"
+        
+      
+    
+  
