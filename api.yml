@@ -1,0 +1,44 @@
+openapi: 3.0.1
+info:
+  description: "Calculator API used for simple arithmetic orperations."
+  version: 0.1.0
+  title: "Calculator API"
+  contact:
+    name: "Sekhar B R"
+    email: "sekharbr.sbr@gmail.com"
+servers:
+- url: https://z77c46omtg.execute-api.eu-west-1.amazonaws.com/V4
+  basePath: "/prod"
+  description: The employee api
+paths:
+  /calculator:
+    post:
+      summary: Creates a user.
+      description: "Calculator performs addition, subtraction, multiplication and\
+        \ division between two numbers"
+      parameters:
+        - in: body
+          name: Calculator
+          schema:
+            type: ObjectRequest
+            properties:
+              firstNumber:
+                type: number
+              secondNumber:
+                type: number
+              operatorToUse:
+                type: string
+                description: Type of arithmetic operations. API Support ADD, SUBTRACT, MULTIPLY, DIVIDE.
+      responses:
+        '200':
+          description: A JSON object containing result
+          schema:
+            type: ObjectResponse
+            properties:
+              result:
+                type: number
+                description: Result of the arithmetic operation. The property will be null if the API gives error message.
+              error:
+                type: string
+                description: Error message from the API is shown here, it will be null if the operation is sucessfull
+
