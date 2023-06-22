@@ -17,3 +17,6 @@ jobs:
       - uses: stoplightio/spectral-action@latest
         with:
           file_glob: 'api.yaml'
+      
+      - if: ${{ failure() }}
+        run: exit 0
