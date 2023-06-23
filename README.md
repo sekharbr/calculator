@@ -1,6 +1,8 @@
 Calcultor API
 =============
 
+Test with spectral
+
 Calculator API used for simple arithmetic operations.
 <br />
 The API support following arithmetic operations.
